@@ -22,7 +22,7 @@ Given(/^I send "(.*?)" and accept JSON$/) do |content_type|
 end
 
 When(/^I set JSON request body to '(.*?)'$/) do |body|
-  @body = JSON.parse body
+  @body = body
 end
 
 When(/^I set form request body to:$/) do |params|
@@ -71,12 +71,12 @@ When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)" with:$/) do |meth
 end
 
 When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)"$/) do |method, url|
-  request_url = URI.encode resolve(url)
+  request_url = URI.encode resolve(ENV['API_URL'] + '/' + url)
   if 'GET' == %/#{method}/ and $cache.has_key? %/#{request_url}/
     @response = $cache[%/#{request_url}/]
-    @headers = nil
+    # @headers = nil
     @body = nil
-    @grabbed = nil
+    # @grabbed = nil
     next
   end
 
@@ -98,9 +98,9 @@ When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)"$/) do |method, ur
     response = e.response
   end
   @response = CucumberApi::Response.create response
-  @headers = nil
+  # @headers = nil
   @body = nil
-  @grabbed = nil
+  # @grabbed = nil
   $cache[%/#{request_url}/] = @response if 'GET' == %/#{method}/
 end
 
