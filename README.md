@@ -1,3 +1,11 @@
+# fork of cucumber-api
+
+This is a fork of [cucumber-api](https://github.com/hidroh/cucumber-api). The only changes to it are:
+- set json request body to string
+- headers and grabbed parameters now get trickled across later steps
+- you can use API_URL env variable to set your base url
+
+Here is the readme from the original repo:
 # cucumber-api
 [![Build Status](https://travis-ci.org/hidroh/cucumber-api.svg?branch=master)](https://travis-ci.org/hidroh/cucumber-api) [![Gem Version](https://badge.fury.io/rb/cucumber-api.svg)](http://badge.fury.io/rb/cucumber-api) [![Dependency Status](https://gemnasium.com/hidroh/cucumber-api.svg)](https://gemnasium.com/hidroh/cucumber-api)
  [![Code Climate](https://codeclimate.com/github/hidroh/cucumber-api/badges/gpa.svg)](https://codeclimate.com/github/hidroh/cucumber-api) [![Total Downloads](http://ruby-gem-downloads-badge.herokuapp.com/cucumber-api?type=total)](https://rubygems.org/gems/cucumber-api)
