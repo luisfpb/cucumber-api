@@ -22,6 +22,7 @@ Given(/^I send "(.*?)" and accept JSON$/) do |content_type|
 end
 
 When(/^I set JSON request body to '(.*?)'$/) do |body|
+  @headers[:content_type] = :json
   @body = body
 end
 
