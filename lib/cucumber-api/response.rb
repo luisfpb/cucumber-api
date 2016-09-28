@@ -92,12 +92,12 @@ module CucumberApi
     end
 
     # Retrieve pretty JSON response for logging
-    # @return [String] pretty JSON response if verbose setting is true, empty string otherwise
+    # @return [String] pretty JSON response if JSON, otherwise
     def to_json_s
-      if ENV['cucumber_api_verbose'] == 'true'
+      begin
         JSON.pretty_generate(JSON.parse to_s)
-      else
-        ''
+      rescue JSON::ParserError
+        to_s
       end
     end
   end

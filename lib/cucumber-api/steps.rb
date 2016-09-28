@@ -9,7 +9,7 @@ end
 $cache = {}
 
 Given(/^I send and accept JSON$/) do
-  steps %Q{
+  steps %q{
     Given I send "application/json" and accept JSON
   }
 end
@@ -106,7 +106,10 @@ When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)"$/) do |method, ur
 end
 
 Then(/^the response status should be "(\d+)"$/) do |status_code|
-  raise %/Expect #{status_code} but was #{@response.code}/ if @response.code != status_code.to_i
+  if @response.code != status_code.to_i
+    p @response.to_json_s
+    raise %/Expect #{status_code} but was #{@response.code}/
+  end
 end
 
 Then(/^the JSON response should follow "(.*?)"$/) do |schema|
