@@ -63,7 +63,7 @@ end
 
 When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)" with:$/) do |method, url, params|
   unless params.hashes.empty?
-    query = params.hashes.first.map{|key, value| %/#{key}=#{value}/}.join("&")
+    query = params.hashes.first.map { |key, value| %/#{key}=#{value}/ }.join("&")
     url = url.include?('?') ? %/#{url}&#{query}/ : %/#{url}?#{query}/
   end
   steps %Q{
@@ -103,6 +103,9 @@ When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)"$/) do |method, ur
   @body = nil
   # @grabbed = nil
   $cache[%/#{request_url}/] = @response if 'GET' == %/#{method}/
+  # Terrible, Horrible, No Good, Very Bad Hack
+  # until we figure out how to circumvent rate-limiting
+  sleep 2
 end
 
 Then(/^the response status should be "(\d+)"$/) do |status_code|
@@ -130,7 +133,7 @@ end
 Then(/^the JSON response root should be (object|array)$/) do |type|
   steps %Q{
     Then the JSON response should have required key "$" of type #{type}
-  }
+        }
 end
 
 Then(/^the JSON response should have key "([^\"]*)"$/) do |json_path|
@@ -141,7 +144,7 @@ end
 
 Then(/^the JSON response should have (required|optional) key "(.*?)" of type \
 (numeric|string|array|boolean|numeric_string|object|array|any)( or null)?$/) do |optionality, json_path, type, null_allowed|
-  next if optionality == 'optional' and not @response.has(json_path)  # if optional and no such key then skip
+  next if optionality == 'optional' and not @response.has(json_path) # if optional and no such key then skip
   if 'any' == type
     @response.get json_path
   elsif null_allowed.nil?
