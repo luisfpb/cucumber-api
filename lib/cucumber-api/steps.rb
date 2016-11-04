@@ -59,6 +59,7 @@ When(/^I grab "(.*?)" as "(.*?)"$/) do |json_path, place_holder|
 
   @grabbed = {} if @grabbed.nil?
   @grabbed[%/#{place_holder}/] = @response.get json_path
+  p place_holder + ' = ' + @grabbed[%/#{place_holder}/]
 end
 
 When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)" with:$/) do |method, url, params|
