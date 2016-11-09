@@ -104,9 +104,6 @@ When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)"$/) do |method, ur
   @body = nil
   # @grabbed = nil
   $cache[%/#{request_url}/] = @response if 'GET' == %/#{method}/
-  # Terrible, Horrible, No Good, Very Bad Hack
-  # until we figure out how to circumvent rate-limiting
-  sleep 5
 end
 
 Then(/^the response status should be "(\d+)"$/) do |status_code|
