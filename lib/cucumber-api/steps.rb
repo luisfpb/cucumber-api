@@ -100,8 +100,8 @@ When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)"$/) do |method, ur
   begin
     case method
       when 'GET'
-        response = RestClient.get request_url, @headers
         p @headers
+        response = RestClient.get request_url, @headers
       when 'POST'
         response = RestClient.post request_url, @body, @headers
       when 'PATCH'
