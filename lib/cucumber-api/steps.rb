@@ -6,8 +6,6 @@ if ENV['cucumber_api_verbose'] == 'true'
   RestClient.log = 'stdout'
 end
 
-$cache = {}
-
 Given(/^I send and accept JSON$/) do
   steps %q{
     Given I send "application/json" and accept JSON
@@ -88,19 +86,11 @@ end
 
 When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)"$/) do |method, url|
   request_url = URI.encode resolve(ENV['API_URL'] + '/' + url)
-  if 'GET' == %/#{method}/ and $cache.has_key? %/#{request_url}/
-    @response = $cache[%/#{request_url}/]
-    # @headers = nil
-    @body = nil
-    # @grabbed = nil
-    next
-  end
 
   @headers = {} if @headers.nil?
   begin
     case method
       when 'GET'
-        p 'the header is', @headers
         response = RestClient.get request_url, @headers
       when 'POST'
         response = RestClient.post request_url, @body, @headers
@@ -118,7 +108,6 @@ When(/^I send a (GET|POST|PATCH|PUT|DELETE) request to "(.*?)"$/) do |method, ur
   # @headers = nil
   @body = nil
   # @grabbed = nil
-  $cache[%/#{request_url}/] = @response if 'GET' == %/#{method}/
   # Terrible, Horrible, No Good, Very Bad Hack
   # until we figure out how to circumvent rate-limiting
   sleep 2 if ENV['rate_limiting'] == 'true'
