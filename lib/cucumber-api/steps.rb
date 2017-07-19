@@ -70,7 +70,7 @@ When(/^I grab "(.*?)" as "(.*?)"$/) do |json_path, place_holder|
   end
 
   @grabbed = {} if @grabbed.nil?
-  @grabbed[%/#{place_holder}/] = @response.get json_path
+  @grabbed[%/#{place_holder}/] = (@response.get json_path).to_s
   p place_holder + ' = ' + @grabbed[%/#{place_holder}/]
 end
 
